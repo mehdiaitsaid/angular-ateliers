@@ -1,13 +1,44 @@
 <h1>Todo List</h1>
-
-<ul>
-  <li *ngFor="let item of taches" >{{item}}</li>
-
-</ul>  
+<ol>
+  <li *ngFor="let item of taches">
+    <ul
+    [ngClass]="{
+      'bg-red': item.rappelles ,
+      'bg-blue': !item.rappelles
+    }"
+    >
+      <li>------------------ ID : {{item.id}}------------------</li>
+      <li>Titre : {{item.titre}}</li>
+      <li>Date : {{item.date | dateAgo}} (Origine {{item.date}})</li>
+      <li>Rappelles : {{item.rappelles ? 'Oui' : 'Non'}}</li>
+      <li>Priorité : {{item.priorite}}</li>
+      <li>Description : {{item.description}}</li>
+    </ul>  
+  </li>
+</ol>
 
 <br>
-<label>Ajouter une tâche</label>
-
-<input type="text" [(ngModel)]="tache" placeholder="Tâche">
-
-<button (click)="ajouterTache()" >Ajouter</button>
+<label>Titre</label>
+<br>
+<input type="text" [(ngModel)]="tache.titre" placeholder="Titre">
+<br>
+<label>Date</label>
+<br>
+<input type="datetime-local" [(ngModel)]="tache.date" placeholder="Date">
+<br>
+<label>Rappelles ?</label>
+<input type="checkbox" [(ngModel)]="tache.rappelles" placeholder="Rappelles moi">
+<br>
+<label>Priorité</label>
+<select  [(ngModel)]="tache.priorite">
+  <option value="1">1</option>
+  <option value="2">2</option>
+  <option value="3">3</option>
+</select>
+<br>
+<label>Description</label>
+<br>
+<textarea type="text" [(ngModel)]="tache.description" placeholder="Description">
+</textarea>
+<br>
+<button (click)="ajouterTache()">Ajouter</button>
