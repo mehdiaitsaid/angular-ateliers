@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Tache } from './models';
 
 @Component({
@@ -6,33 +7,32 @@ import { Tache } from './models';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent  implements OnInit {
   title = 'my-app';
   public taches: Tache[] = [];
-  public tache: Tache = {
-    id: 0,
-    titre: '',
-    description: '',
-    priorite: 3,
-    date: '',
-    rappelles: false,
-  };
+  public tacheForm: FormGroup;
+  public submited: boolean = false;
+
+  ngOnInit() {
+    this.tacheForm = new FormGroup({
+      id: new FormControl(null),
+      titre: new FormControl(null, [Validators.required]),
+      description: new FormControl(null),
+      priorite: new FormControl(null, [Validators.required]),
+      date: new FormControl(null, [Validators.required]),
+      rappelles: new FormControl(false)
+    });
+  }
 
   ajouterTache() {
-    if (this.tache.titre === '') {
-      alert('Veuillez remplir le champ');
+    if (!this.tacheForm.valid) {
+      this.submited = true;
+      //alert('Veuillez remplir les champs');
       return;
     }
-    this.tache.id = Math.floor(Math.random() * 5000);
-    this.taches.push(this.tache);
-    this.tache = {
-      id: 0,
-      titre: '',
-      description: '',
-      priorite: 3,
-      date: '',
-      rappelles: false,
-    };
+    this.tacheForm.value.id = Math.floor(Math.random() * 5000);
+    this.taches.push(this.tacheForm.value);
+    this.submited = false;
   }
 
 
