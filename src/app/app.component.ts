@@ -10,30 +10,35 @@ import { Tache } from './models';
 export class AppComponent  implements OnInit {
   title = 'my-app';
   public taches: Tache[] = [];
-  public tacheForm: FormGroup;
-  public submited: boolean = false;
+  public tache: Tache;
+  public isOnUpdate = false;
 
   ngOnInit() {
-    this.tacheForm = new FormGroup({
-      id: new FormControl(null),
-      titre: new FormControl(null, [Validators.required]),
-      description: new FormControl(null),
-      priorite: new FormControl(null, [Validators.required]),
-      date: new FormControl(null, [Validators.required]),
-      rappelles: new FormControl(false)
-    });
+
   }
 
-  ajouterTache() {
-    if (!this.tacheForm.valid) {
-      this.submited = true;
-      //alert('Veuillez remplir les champs');
-      return;
-    }
-    this.tacheForm.value.id = Math.floor(Math.random() * 5000);
-    this.taches.push(this.tacheForm.value);
-    this.submited = false;
+  onAdd(event: Tache) {
+
+    this.taches.push(event);
+    
   }
+
+  selectedTache(event: Tache) {
+    console.log(event);
+    
+    this.tache = event;
+    this.isOnUpdate = true;
+  }
+  onUpdate(event: Tache) {
+
+    this.taches = this.taches.map(tache => {
+      if(tache.id !== event.id) return tache;
+      else return event;
+    });
+    this.isOnUpdate = false;
+    
+  }
+
 
 
 

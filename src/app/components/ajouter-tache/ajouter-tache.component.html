@@ -1,1 +1,37 @@
-<p>ajouter-tache works!</p>
+<form [formGroup]="tacheForm" (ngSubmit)="ajouterTache()">
+
+    <label>Titre</label>
+    <br>
+    <input type="text"  formControlName="titre" placeholder="Titre">
+    <br>
+    <strong *ngIf="submited && tacheForm.controls['titre'].invalid" class="bg-red">Le titre est obligatoire</strong>
+    <br>
+    <label>Date</label>
+    <br>
+    <input type="datetime-local" formControlName="date"   placeholder="Date">
+    <br>
+    <strong *ngIf="submited && tacheForm.controls['date'].invalid" class="bg-red">La date est obligatoire</strong>
+    
+    <br>
+    <label>Rappelles ?</label>
+    <input type="checkbox"  formControlName="rappelles"  placeholder="Rappelles moi">
+    <br>
+    <label>Priorité</label>
+    <select  formControlName="priorite"  >
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+    </select>
+    <br>
+    <strong *ngIf="submited && tacheForm.controls['priorite'].invalid" class="bg-red">La Priorité est obligatoire</strong>
+    
+    <br>
+    <label>Description</label>
+    <br>
+    <textarea  formControlName="description" type="text"  placeholder="Description">
+    </textarea>
+    <br>
+    <button type="submit">Ajouter</button>
+    
+    
+    </form>
