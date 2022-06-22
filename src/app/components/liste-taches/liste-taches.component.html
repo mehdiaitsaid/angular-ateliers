@@ -1,0 +1,22 @@
+<h1>Todo List</h1>
+<ol>
+  <li *ngFor="let item of taches">
+    <ul
+    [ngClass]="{
+      'bg-red': item.rappelles ,
+      'bg-blue': !item.rappelles
+    }"
+    >
+      <li>------------------ ID : {{item.id}}------------------</li>
+      <li>Titre : {{item.titre}}</li>
+      <li>Date : {{item.date | dateAgo}} (Origine {{item.date}})</li>
+      <li>Rappelles : {{item.rappelles ? 'Oui' : 'Non'}}</li>
+      <li>Priorité : {{item.priorite}}</li>
+      <li>Description : {{item.description}}</li>
+      <li>Actions : <button (click)="supprimer(item.id)">Supprimer</button> 
+        <button (click)="modifier(item)">Modifier</button> </li>
+    </ul>  
+  </li>
+</ol>
+
+<br>

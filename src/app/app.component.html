@@ -1,13 +1,5 @@
-<h1>Todo List</h1>
+<app-modifier-tache *ngIf="isOnUpdate"  [tache]="tache" (onUpdate)="onUpdate($event)"></app-modifier-tache>
 
-<ul>
-  <li *ngFor="let item of taches" >{{item}}</li>
+<app-liste-taches  (selectedTache)="selectedTache($event)" [taches]="taches"></app-liste-taches>
+<app-ajouter-tache (onAdd)="onAdd($event)"></app-ajouter-tache>
 
-</ul>  
-
-<br>
-<label>Ajouter une tâche</label>
-
-<input type="text" [(ngModel)]="tache" placeholder="Tâche">
-
-<button (click)="ajouterTache()" >Ajouter</button>
