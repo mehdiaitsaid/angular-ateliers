@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Tache } from 'src/app/models';
+import { TacheService } from 'src/app/services/tache.service';
 
 @Component({
   selector: 'app-liste-taches',
@@ -8,17 +10,22 @@ import { Tache } from 'src/app/models';
 })
 export class ListeTachesComponent implements OnInit {
 
-  @Input() taches: Tache[] = [];
+  taches: Tache[] = [];
   @Output() selectedTache = new EventEmitter();
+  subscription: Subscription;
 
 
-  constructor() { }
+
+  constructor(private tacheservices: TacheService) { }
 
   ngOnInit(): void {
+    this.subscription = this.tacheservices.getTaches().subscribe(data => {
+      this.taches = data.taches;
+    });
   } 
   
   supprimer(id: number) {
-    this.taches = this.taches.filter(tache => tache.id !== id);
+    this.tacheservices.supprimerTache(id);
   }  
   modifier(tache: Tache) {
     this.selectedTache.emit(tache);

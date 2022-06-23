@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Tache } from 'src/app/models';
+import { TacheService } from 'src/app/services/tache.service';
 
 @Component({
   selector: 'app-modifier-tache',
@@ -12,10 +13,11 @@ export class ModifierTacheComponent implements OnInit {
   public tacheForm: FormGroup;
   public submited: boolean = false;
   @Input() tache: Tache ;
-
   @Output() onUpdate = new EventEmitter();
 
-  constructor() { }
+
+  constructor(private tacheservices: TacheService) { }
+
 
   ngOnInit(): void {
     this.tacheForm = new FormGroup({
@@ -34,7 +36,10 @@ export class ModifierTacheComponent implements OnInit {
       //alert('Veuillez remplir les champs');
       return;
     }
-    this.onUpdate.emit(this.tacheForm.value);
+
+    this.tacheservices.modifierTache(this.tacheForm.value);
+    this.onUpdate.emit();
+
     this.submited = false;
   }
 

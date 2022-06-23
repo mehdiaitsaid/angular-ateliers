@@ -9,7 +9,6 @@ import { Tache } from './models';
 })
 export class AppComponent  implements OnInit {
   title = 'my-app';
-  public taches: Tache[] = [];
   public tache: Tache;
   public isOnUpdate = false;
 
@@ -17,24 +16,14 @@ export class AppComponent  implements OnInit {
 
   }
 
-  onAdd(event: Tache) {
 
-    this.taches.push(event);
-    
-  }
 
   selectedTache(event: Tache) {
-    console.log(event);
     
     this.tache = event;
     this.isOnUpdate = true;
   }
   onUpdate(event: Tache) {
-
-    this.taches = this.taches.map(tache => {
-      if(tache.id !== event.id) return tache;
-      else return event;
-    });
     this.isOnUpdate = false;
     
   }

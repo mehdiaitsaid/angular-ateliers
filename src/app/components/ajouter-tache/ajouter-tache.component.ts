@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { TacheService } from 'src/app/services/tache.service';
 
 @Component({
   selector: 'app-ajouter-tache',
@@ -9,9 +10,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class AjouterTacheComponent implements OnInit {
   public tacheForm: FormGroup;
   public submited: boolean = false;
-  @Output() onAdd = new EventEmitter();
 
-  constructor() { }
+  constructor(private tacheservices: TacheService) { }
+
 
   ngOnInit(): void {
     this.tacheForm = new FormGroup({
@@ -30,8 +31,7 @@ export class AjouterTacheComponent implements OnInit {
       //alert('Veuillez remplir les champs');
       return;
     }
-    this.tacheForm.value.id = Math.floor(Math.random() * 5000);
-    this.onAdd.emit(this.tacheForm.value);
+    this.tacheservices.ajouterTache(this.tacheForm.value)
     this.submited = false;
   }
 
